@@ -1,4 +1,6 @@
 import React, {useRef} from 'react';
+import {ErrorToast, isEmpty, SuccessToast} from "../../Helper/ValidationHelper";
+import {Create} from "../../APIServices/CRUDServices";
 
 const CreateForm = () => {
 
@@ -11,6 +13,40 @@ const CreateForm = () => {
       let Unit_Price = UnitPrice.value;
       let Product_Qty = Qty.value;
       let Total_Price = TotalPrice.value;
+
+      if (isEmpty(Product_Name)){
+          ErrorToast("Product Name Required");
+      }
+      else if (isEmpty(Product_Code)){
+          ErrorToast("Product Code Required");
+      }
+      else if (isEmpty(Product_Img)){
+          ErrorToast("Product Image Required");
+      }
+      else if (isEmpty(Unit_Price)){
+          ErrorToast("Product Price Required");
+      }
+      else if (isEmpty(Product_Qty)){
+          ErrorToast("Product Quantity Required");
+      }
+      else if (isEmpty(Total_Price)){
+          ErrorToast("Total Price Required");
+      }
+      else{
+          //Data Saved
+          Create(Product_Name,Product_Code,Product_Img,Unit_Price,Product_Qty,Total_Price)
+              .then((Result)=>{
+                  if (Result===true){
+                      SuccessToast("Data Saved Success");
+                  }else{
+                      ErrorToast("Request Fail try again");
+                  }
+              })
+
+
+
+      }
+
 
     }
 

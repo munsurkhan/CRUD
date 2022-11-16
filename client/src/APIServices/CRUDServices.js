@@ -50,7 +50,7 @@ export function Delete(id){
         return false;
     });
 }
-
+/*
 export function Update(id){
     let URL = "/api/v1/UpdateProduct"+id;
     let PostBody={
@@ -72,3 +72,4 @@ export function Update(id){
         return false;
     });
 }
+ */
