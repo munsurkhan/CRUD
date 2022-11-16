@@ -1,10 +1,11 @@
-import React, {useRef} from 'react';
+import React, {Fragment, useRef} from 'react';
 import {ErrorToast, isEmpty, SuccessToast} from "../../Helper/ValidationHelper";
 import {Create} from "../../APIServices/CRUDServices";
+import FullScreenLoader from "../Common/FullScreenLoader";
 
 const CreateForm = () => {
 
-    let ProductName,ProductCode,Img,UnitPrice,Qty,TotalPrice = useRef();
+    let ProductName,ProductCode,Img,UnitPrice,Qty,TotalPrice,Loader = useRef();
     
     const SaveData = () => {
       let Product_Name = ProductName.value;
@@ -34,10 +35,18 @@ const CreateForm = () => {
       }
       else{
           //Data Saved
+          Loader.classList.remove("d-none");
           Create(Product_Name,Product_Code,Product_Img,Unit_Price,Product_Qty,Total_Price)
               .then((Result)=>{
                   if (Result===true){
+                      Loader.classList.add("d-none");
                       SuccessToast("Data Saved Success");
+                      ProductName.value = "";
+                      ProductCode.value = "";
+                      Img.value = "";
+                      UnitPrice.value = "";
+                      Qty.value = "";
+                      TotalPrice.value = "";
                   }else{
                       ErrorToast("Request Fail try again");
                   }
@@ -51,7 +60,7 @@ const CreateForm = () => {
     }
 
     return (
-
+    <Fragment>
         <div className="container">
             <div className="row">
                 <div className="col-md-4 p-2">
@@ -93,6 +102,13 @@ const CreateForm = () => {
             </div>
             
         </div>
+
+        <div className="d-none" ref={(div)=>Loader=div}>
+
+            <FullScreenLoader/>
+        </div>
+
+    </Fragment>
     );
 };
 
