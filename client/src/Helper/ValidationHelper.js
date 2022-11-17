@@ -18,7 +18,6 @@ class ValidationHelper{
         cogoToast.error(msg, {position:"top-center"})
     }
 
-
 }
 
 export const {isEmpty,SuccessToast,ErrorToast} = new ValidationHelper();

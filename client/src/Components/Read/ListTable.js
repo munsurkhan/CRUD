@@ -16,7 +16,7 @@ const ListTable = () => {
     if (DataList.length>0){
         return (
             <div>
-                <table className="table table-bordered">
+                <table className="table">
                     <thead>
                     <tr>
                         <th>Product Name</th>
@@ -41,13 +41,12 @@ const ListTable = () => {
                                         <td>{item.Qty}</td>
                                         <td>{item.TotalPrice}</td>
                                         <td>
-                                            <button className="btn btn-danger mx-1">Delete</button>
-                                            <button className="btn btn-warning mx-1">Update</button>
+                                            <button className="btn btn-sm btn-danger mx-1 p-2">Delete</button>
+                                            <button className="btn btn-sm btn-warning mx-1 p-2">Update</button>
                                         </td>
                                     </tr>
                                 )
                             })
-
                         }
                     </tbody>
                 </table>
