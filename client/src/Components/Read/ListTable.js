@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Read} from "../../APIServices/CRUDServices";
+import {Delete, Read} from "../../APIServices/CRUDServices";
 import FullScreenLoader from "../Common/FullScreenLoader";
+import {ErrorToast, SuccessToast} from "../../Helper/ValidationHelper";
+import {withRouter} from "react-router";
 
-const ListTable = () => {
+const ListTable = (props) => {
 
     //state
     let [DataList,SetDataList]=useState([]);
@@ -12,6 +14,25 @@ const ListTable = () => {
             SetDataList(Result);
         }).catch()
     },[])//planti Methode
+
+    //Delete
+    const DeleteItem = (id)=>{
+        Delete(id).then((result)=>{
+            if (result===true){
+                SuccessToast("Data Delete Success");
+                props.history.push("/");
+            }else{
+                ErrorToast("Data Delete Fail");
+            }
+        })
+    }
+
+    //Update
+    const UpdateItem = (id)=>{
+        alert(id)
+    }
+
+
 
     if (DataList.length>0){
         return (
@@ -41,8 +62,8 @@ const ListTable = () => {
                                         <td>{item.Qty}</td>
                                         <td>{item.TotalPrice}</td>
                                         <td>
-                                            <button className="btn btn-sm btn-danger mx-1 p-2">Delete</button>
-                                            <button className="btn btn-sm btn-warning mx-1 p-2">Update</button>
+                                            <button onClick={DeleteItem.bind(this,item._id)} className="btn btn-sm btn-danger mx-1 p-2">Delete</button>
+                                            <button onClick={UpdateItem.bind(this,item._id)} className="btn btn-sm btn-warning mx-1 p-2">Update</button>
                                         </td>
                                     </tr>
                                 )
@@ -63,4 +84,4 @@ const ListTable = () => {
 
 };
 
-export default ListTable;
+export default withRouter(ListTable);
